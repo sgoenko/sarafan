@@ -1,11 +1,6 @@
 package by.hay.sarafan.control;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import by.hay.sarafan.domain.Message;
-import by.hay.sarafan.exceptions.NotFoundException;
 import by.hay.sarafan.repo.MessageRepo;
 
 @RestController
@@ -51,8 +43,7 @@ public class MessageController {
 	@PutMapping("{id}")
 	public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) {
 		BeanUtils.copyProperties(message, messageFromDb, "id" );
-		
-		return messageFromDb;
+		return messageRepo.save(messageFromDb);
 	}
 	
 	@DeleteMapping("{id}")
